@@ -638,11 +638,16 @@ public class CadastrarVeiculo extends javax.swing.JFrame {
         } else {
             placa = jTxtPlaca.getText();
             boolean operacao = dao.excluir(placa);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação exclusão",
+                JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION){
             if (operacao == true) {
                 JOptionPane.showMessageDialog(null, "Veiculo excluído com sucesso!");
                 this.limpaTela();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro na exclusão do veiculo");
+            }
             }
             dao.desconectar();
         }

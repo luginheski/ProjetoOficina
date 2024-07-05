@@ -631,7 +631,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             cpf = jTxtCpf.getText().replace(".", "").replace("-", "");
             boolean operacao = dao.excluir(cpf);
             
-            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação",
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação exclusão",
                 JOptionPane.YES_NO_OPTION);
             if(resposta == JOptionPane.YES_OPTION){
             if (operacao == true) {
