@@ -166,11 +166,8 @@ WHERE
 				<reportElement x="-20" y="50" width="595" height="1" uuid="2d946a35-9f03-499a-8291-92d5d3c9c0ec"/>
 			</line>
 			<image>
-				<reportElement x="0" y="0" width="45" height="45" uuid="2509e498-f6ab-4b5e-8de9-73d0ce60aa33">
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<imageExpression><![CDATA["C:/Users/pcinfo/Documents/NetBeansProjects/OficinaDoPolacoPI2/oficina01.png"]]></imageExpression>
+				<reportElement x="10" y="0" width="40" height="41" uuid="f924ddf7-b7e8-44ba-895d-c33930dec7fc"/>
+				<imageExpression><![CDATA["C:/Users/pcinfo/Documents/GitHub/Projeto oficina/CodigoFonte/OficinaDoPolacoPI2/oficina01.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -197,7 +194,7 @@ WHERE
 			</line>
 			<textField>
 				<reportElement x="410" y="8" width="150" height="14" uuid="ab91f031-6272-40c2-9a54-ebaeee5314c4"/>
-				<textFieldExpression><![CDATA["("+$F{telefone}.subSequence( 0, 2 )+")"+" "+$F{telefone}.subSequence( 2, 7 )+"-"+$F{telefone}.subSequence( 7, 11 )]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{telefone}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="380" y="8" width="30" height="14" uuid="27ec2d6d-f561-49bb-9483-a00d8e80d624"/>
