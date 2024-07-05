@@ -631,13 +631,16 @@ public class CadastroCliente extends javax.swing.JFrame {
             cpf = jTxtCpf.getText().replace(".", "").replace("-", "");
             boolean operacao = dao.excluir(cpf);
             
-            JOptionPane.showConfirmDialog(rootPane, "Deseja excluir pemanentemente");
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação",
+                JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION){
             if (operacao == true) {
                 JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso!");
                 this.limpaTela();
                 preencherTabela("");
             } else {
                 JOptionPane.showMessageDialog(null, "Erro na exclusão do Cliente");
+            }
             }
         }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
