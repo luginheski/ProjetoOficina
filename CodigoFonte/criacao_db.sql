@@ -45,8 +45,16 @@ quantidade decimal(8,2)not null,
 porcento int(4)not null,
 orcamentoId int not null,
 valorTotal decimal(8,2)not null,
+valorPunt decimal(8,2)not null,
 key fk_Orcamento(orcamentoId),
 constraint foreign key(orcamentoId) references Orcamento(idOrcamento));
+
+create table Funcionario(
+nome varchar(100) not null,
+cpf varchar(15) not null primary key,
+login varchar(30),
+senha varchar(30),
+descPessoa varchar(30));
 
 select * from Cliente;
 
