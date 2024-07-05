@@ -1,0 +1,247 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JasperReports master-SNAPSHOT - Chart Customizers</title>
+        <link rel="stylesheet" href="../../resources/stylesheet.css">
+        <style type="text/css"></style>
+    </head>
+    <body bgcolor="#FFFFFF">
+        <a name="top"></a>
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+                <td colspan="2" align="right"><span class="element"><a href="../../JasperReports-Ultimate-Guide-3.pdf">JasperReports Ultimate Guide</a> - <a href="../../sample.reference.html">Samples</a> - <a href="../../schema.reference.html">Schema</a> - <a href="../../config.reference.html">Configuration</a> - <a href="../../function.reference.html">Functions</a> - <a href="http://community.jaspersoft.com/wiki/jasperreports-library-faqs">FAQ</a> - <a href="../../api/index.html">API (Javadoc)</a></span>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr size="1">
+                </td>
+            </tr>
+            <tr valign="middle">
+                <td nowrap="true"><span class="title">JasperReports - Chart Customizers (version master-SNAPSHOT)</span></td><td align="right"><img src="../../resources/jasperreports.svg" border="0"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr size="1">
+                </td>
+            </tr>
+        </table>
+        <br>
+        <span class="description"><span class="description">Shows how to use multiple chart customizers on the same chart</span></span>
+        <br>
+        <br>
+        <span class="element"><a href="http://sourceforge.net/projects/jasperreports/files/jasperreports/JasperReports%20master-SNAPSHOT/jasperreports-master-SNAPSHOT-project.zip/download" target="_blank">Download All Sample Source Files</a></span>
+        <br>
+        <span class="element"><a href="https://github.com/TIBCOSoftware/jasperreports/tree/master-SNAPSHOT/jasperreports/demo/samples/chart_customizers/" target="_blank">Browse Sample Source Files on Git</a></span>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="width: 20px;">
+                    <br>
+                </td><td>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><span class="label">Main Features in This Sample</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                </td><td><span class="element"><a href="#chartcustomizers">Multiple Chart Customizers</a></span></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><span class="label">Secondary Features</span></td>
+            </tr>
+            <tr>
+                <td></td><td><span class="element"><a href="../charts/index.html#charts">Charts</a></span></td>
+            </tr>
+            <tr>
+                <td></td><td><span class="element"><a href="../charts/index.html#chartcustomizers">Altering Charts (Chart Customizers)</a></span></td>
+            </tr>
+        </table>
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td><img src="../../resources/px.gif" border="0" width="20" height="1"></td><td width="80%">
+                    <br>
+                </td><td width="20%">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" align="right"><a name="chartcustomizers"></a><a href="#top" class="toc">top</a></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <hr size="1">
+                </td>
+            </tr>
+            <tr valign="top">
+                <td><img src="../../resources/jr-16x16.png" border="0"></td><td colspan="4"><span class="name">Multiple Chart Customizers</span></td><td align="right"><span class="copy">Documented by 
+	<a href="mailto:teodord@users.sourceforge.net" class="copy">Teodor Danciu</a></span></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <br>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td>
+                    <br>
+                </td><td nowrap="true"><span class="label">Description / Goal</span></td><td>
+                    <br>
+                </td><td colspan="3"><span class="description">
+How to make various changes to a generated chart using the <a href="http://jfree.org/jfreechart/" target="_blank" class="element">JFreeChart API</a>,
+using one or more chart customizer on the same report.
+    </span></td>
+            </tr>
+            <tr valign="top">
+                <td>
+                    <br>
+                </td><td colspan="1"><span class="label">Since</span></td><td>
+                    <br>
+                </td><td colspan="3"><span class="description">6.3.1</span></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                </td><td colspan="5"><span class="description">
+<b>Multiple Chart Customizers</b>
+
+                        <br>
+                        
+                        <br>
+                        When the chart customizer feature was first introduced, only one chart customizer object could be assigned to a chart element 
+using the customizerClass attribute of the chart element.
+
+                        <br>
+                        Although a chart customizer gives great flexibility in altering or enhancing the output of the chart element, having only one such 
+object did not allow easy reuse and piling/stacking up several chart customizer at a time.
+
+                        <br>
+                        
+                        <br>
+                        Support for multiple chart customizers per chart element was introduced using custom properties at chart element level having 
+their names in the following format:
+
+                        <pre>
+net.sf.jasperreports.customizer.class.{arbitrary_name}
+</pre>
+                        Such a property is supposed to specify the name of a class that implements the 
+<span class="element"><a href="../../api/net/sf/jasperreports/engine/JRChartCustomizer.html" target="_blank">JRChartCustomizer</a></span> interface and has an empty constructor. 
+This constructor is used to instantiate a chart customizer object at report fill time and is then called to customizer the chart output.
+The <span class="code"><code>{arbitrary_name}</code></span> suffix of the property is optional and represents the name of the chart customizer. This value will be injected into 
+the chart customizer object using the setName(String) method in case the chart customizer implements the 
+<span class="element"><a href="../../api/net/sf/jasperreports/engine/NamedChartCustomizer.html" target="_blank">NamedChartCustomizer</a></span> interface.
+
+                        <br>
+                        The name of the chart customizer allows the chart object to identify additional custom properties at chart element level which are 
+considered to be its own and help configure it, because they contain the name as part of the full property name which have the following format:
+
+                        <pre>
+net.sf.jasperreports.customizer.{arbitrary_name}.{property_name}
+</pre>
+                        Here follows an example in which the domain axis of an XY line chart is configured by setting the minimum and maximum values of the axis as well as the
+distance between ticks:
+
+                        <pre>
+&lt;xyLineChart&gt;
+  &lt;chart evaluationTime="Report"&gt;
+    &lt;reportElement x="0" y="0" width="555" height="300"&gt;
+      &lt;property name="net.sf.jasperreports.customizer.class.domainAxis" value="net.sf.jasperreports.customizers.axis.DomainAxisCustomizer"/&gt;
+      &lt;property name="net.sf.jasperreports.customizer.domainAxis.minValue" value="60"/&gt;
+      &lt;property name="net.sf.jasperreports.customizer.domainAxis.maxValue" value="90"/&gt;
+      &lt;property name="net.sf.jasperreports.customizer.domainAxis.tickUnit" value="5"/&gt;
+    &lt;/reportElement&gt;
+  ...
+  &lt;/chart&gt;
+  ...
+&lt;/xyLineChart&gt;
+</pre>
+                        
+                        <b>Packaged Chart Customizers</b>
+
+                        <br>
+                        
+                        <br>
+                        The chart customizers sample provides a series of chart customizer implementations that can be added as a separate JAR file to 
+an application that uses the JasperReports library.
+
+                        <br>
+                        These chart customizers leverage various features of the JFreeChart library and are as follows:
+
+                        <br>
+                        
+                        <br>
+                        
+                        <i><u>Axis Configurations</u></i>
+
+                        <pre>
+net.sf.jasperreports.customizers.axis.DomainAxisCustomizer
+net.sf.jasperreports.customizers.axis.RangeAxisCustomizer
+</pre>
+                        
+                        <br>
+                        
+                        <i><u>Chart Markers</u></i>
+
+                        <pre>
+net.sf.jasperreports.customizers.marker.CategoryMarkerCustomizer
+net.sf.jasperreports.customizers.marker.DomainIntervalMarkerCustomizer
+net.sf.jasperreports.customizers.marker.DomainValueMarkerCustomizer
+net.sf.jasperreports.customizers.marker.RangeIntervalMarkerCustomizer
+net.sf.jasperreports.customizers.marker.RangeValueMarkerCustomizer
+</pre>
+                        
+                        <br>
+                        
+                        <i><u>Custom Shapes</u></i>
+
+                        <pre>
+net.sf.jasperreports.customizers.shape.LegendShapeCustomizer
+net.sf.jasperreports.customizers.shape.LineDotShapeCustomizer
+</pre>
+                        
+                        <br>
+                        
+                        <i><u>Miscellaneous</u></i>
+
+                        <pre>
+net.sf.jasperreports.customizers.LevelRenderCustomizer
+net.sf.jasperreports.customizers.SplineCustomizer
+net.sf.jasperreports.customizers.StepCustomizer
+</pre>
+                        
+                        <br>
+                        More implementations will be added to this package in the future, but until then, you can leverage this feature and implement and use your own chart customizers.
+    </span></td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <br>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tr>
+                <td>
+                    <hr size="1">
+                </td>
+            </tr>
+            <tr>
+                <td align="center"><span class="copy">&copy; 2001-<script language="javascript">document.write((new Date()).getFullYear())</script> Cloud Software Group, Inc. <a href="http://www.jaspersoft.com" target="_blank" class="copy">www.jaspersoft.com</a></span></td>
+            </tr>
+        </table>
+    </body>
+</html>
