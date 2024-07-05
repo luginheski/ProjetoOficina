@@ -905,12 +905,17 @@ public class OrdemServico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {
             boolean operacao = dao.excluir(idOrcamento);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação exclusão",
+                JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION){
             if (operacao == true) {
                 JOptionPane.showMessageDialog(null, "Orçamento excluido:");
                 limpaTelaVeiculo();
                 preencherTabelaOs();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro na exclusão do veiculo");
+            }
             }
             dao.desconectar();
         }
@@ -926,12 +931,17 @@ public class OrdemServico extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {
             boolean operacao = dao.excluirPeca(idPeca);
+            
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação exclusão",
+                JOptionPane.YES_NO_OPTION);
+            if(resposta == JOptionPane.YES_OPTION){
             if (operacao == true) {
                 JOptionPane.showMessageDialog(null, "Peça excluida:");
                 limpaTelaPecas();
                 preencherTabelaPeca(idOrc);
             } else {
                 JOptionPane.showMessageDialog(null, "Erro na exclusão da peça");
+            }
             }
             dao.desconectar();
         }
