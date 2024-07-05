@@ -1,4 +1,3 @@
-
 package Telas;
 
 import javax.swing.JOptionPane;
@@ -11,10 +10,11 @@ public class Login extends javax.swing.JFrame {
         String validaNome = "Rodrigo";
         String nome = jTxtLogin.getText();
         String senha = String.valueOf(jPass.getPassword());
-        if(!nome.equals(validaNome)){
+
+        if (!nome.equals(validaNome)) {
             JOptionPane.showMessageDialog(null, "Informe um usuario valido!");
             jTxtLogin.requestFocus();
-        }else if (!senha.equals(validaSenha)) {
+        } else if (!senha.equals(validaSenha)) {
             JOptionPane.showMessageDialog(null, "Senha invalida!");
             jPass.requestFocus();
             jPass.setText("");

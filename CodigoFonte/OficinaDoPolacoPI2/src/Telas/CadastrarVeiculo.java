@@ -27,8 +27,8 @@ public class CadastrarVeiculo extends javax.swing.JFrame {
         jBtnExcluir.setEnabled(false);
         preencherTabela("");
     }
-    
-    public void abilitaEdicao(){
+
+    public void abilitaEdicao() {
         jBtnEditar.setEnabled(true);
         jBtnSalvar.setEnabled(true);
         jBtnExcluir.setEnabled(true);
@@ -590,11 +590,11 @@ public class CadastrarVeiculo extends javax.swing.JFrame {
             Cliente cpf = new Cliente();
             cpf.setCpf(jTxtCpf.getText().replace(".", "").replace("-", ""));
             vel.setCpfCliente(cpf);
-            resposta = dao.salvar(vel);         
+            resposta = dao.salvar(vel);
 
             if (resposta == 1) {
                 JOptionPane.showMessageDialog(null, "Dados incluidos com sucesso");
-                   limpaTela();
+                limpaTela();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao tentar inserir dados");
             }
@@ -638,16 +638,16 @@ public class CadastrarVeiculo extends javax.swing.JFrame {
         } else {
             placa = jTxtPlaca.getText();
             boolean operacao = dao.excluir(placa);
-            
-            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação exclusão",
-                JOptionPane.YES_NO_OPTION);
-            if(resposta == JOptionPane.YES_OPTION){
-            if (operacao == true) {
-                JOptionPane.showMessageDialog(null, "Veiculo excluído com sucesso!");
-                this.limpaTela();
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro na exclusão do veiculo");
-            }
+
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente", "Confirmação exclusão",
+                    JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                if (operacao == true) {
+                    JOptionPane.showMessageDialog(null, "Veiculo excluído com sucesso!");
+                    this.limpaTela();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro na exclusão do veiculo");
+                }
             }
             dao.desconectar();
         }
@@ -658,7 +658,7 @@ public class CadastrarVeiculo extends javax.swing.JFrame {
         VeiculoDao dao = new VeiculoDao();
         boolean status;
         int resposta;
-        
+
         vel.setIdVeiculo(Integer.parseInt(jTxtIdVel.getText()));
         vel.setFabricante(jTxtFabricante.getText());
         vel.setModelo(jTxtModelo.getText());
@@ -666,20 +666,20 @@ public class CadastrarVeiculo extends javax.swing.JFrame {
         vel.setAnoModelo(Integer.parseInt(jTxtAnoModelo.getText()));
         vel.setHodometroAnterior(Integer.parseInt(jTxtHodometroAnterior.getText()));
         vel.setPlaca(jTxtPlaca.getText());
-                    
-            status = dao.conectar();
+
+        status = dao.conectar();
 
         if (status == false) {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {
             resposta = dao.atualizar(vel);
-            
+
             if (resposta == 1) {
                 JOptionPane.showMessageDialog(null, "Dados incluidos com sucesso");
                 limpaTela();
             } else if (resposta == 1062) {
                 JOptionPane.showMessageDialog(null, "Matricula já foi cadastrada");
-            }  else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Erro ao tentar inserir dados");
             }
         }

@@ -1,14 +1,14 @@
-
 package Dados;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DadosPessoaisDao {
+public class FuncionarioDao {
+
     private Conexao conexao;
     private Connection conn;
-    
-    public boolean conectar(){
+
+    public boolean conectar() {
         this.conexao = new Conexao();
         this.conn = this.conexao.getConexao();
         if (this.conn == null) {
@@ -17,7 +17,7 @@ public class DadosPessoaisDao {
             return true;
         }
     }
-    
+
     public void desconectar() {
         try {
             this.conn.close();

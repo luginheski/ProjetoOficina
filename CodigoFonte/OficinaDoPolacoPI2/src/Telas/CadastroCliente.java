@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class CadastroCliente extends javax.swing.JFrame {
-    
+
     public void limpaTela() {
         jTxtNome.setText("");
         jTxtCpf.setText("");
@@ -24,7 +24,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jBtnExcluir.setEnabled(false);
         jBtnEditar.setEnabled(false);
     }
-    
+
     public void validaDados() {
         String nome = jTxtNome.getText();
         String cpf = jTxtCpf.getText().replace(".", "").replace("-", "");
@@ -36,7 +36,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         String cidade = jTxtCidade.getText();
         String estado = jTxtEstado.getText();
         String telefone = jTxtTelefone.getText();
-        
+
         if (nome.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Informe um nome");
         } else if (rg.isEmpty()) {
@@ -59,20 +59,20 @@ public class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "informe um estado");
         }
     }
-    
+
     private void preencherTabela(String filtro) {
         ClienteDao dao = new ClienteDao();
         boolean satatus = dao.conectar();
-        
+
         if (satatus == false) {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {
             List<Cliente> listaCliente = dao.listar(filtro);
-            
+
             DefaultTableModel tabelaCliente = (DefaultTableModel) jTcliente.getModel();
             jTcliente.setRowSorter(new TableRowSorter(tabelaCliente));
             tabelaCliente.setNumRows(0);
-            
+
             for (Cliente c : listaCliente) {
                 Object[] obj = new Object[]{
                     c.getNome(),
@@ -91,14 +91,14 @@ public class CadastroCliente extends javax.swing.JFrame {
             dao.desconectar();
         }
     }
-    
+
     public CadastroCliente() {
         initComponents();
         preencherTabela("");
         limpaTela();
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -560,9 +560,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         ClienteDao dao = new ClienteDao();
         boolean status;
         int resposta;
-        
+
         status = dao.conectar();
-        
+
         if (status == false) {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {
@@ -579,7 +579,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 cliente.setBairro(jTxtBairro.getText());
                 cliente.setCidade(jTxtCidade.getText());
                 cliente.setEstado(jTxtEstado.getText());
-                
+
                 resposta = dao.salvar(cliente);
                 preencherTabela("");
                 if (resposta == 1) {
@@ -600,10 +600,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         ClienteDao dao = new ClienteDao();
         boolean status = dao.conectar();
         //dao.consulta(cpf);
-        
+
         if (status == true) {
             Cliente cliente = dao.consulta(cpf);
-            
+
             if (cliente == null) {
                 JOptionPane.showMessageDialog(null, "Cliente não localizado");
             } else {
@@ -632,23 +632,23 @@ public class CadastroCliente extends javax.swing.JFrame {
         String cpf;
         ClienteDao dao = new ClienteDao();
         boolean status = dao.conectar();
-        
+
         if (status == false) {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {
             cpf = jTxtCpf.getText().replace(".", "").replace("-", "");
             boolean operacao = dao.excluir(cpf);
-            
-            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente","Confirmação exclusão",
-                JOptionPane.YES_NO_OPTION);
-            if(resposta == JOptionPane.YES_OPTION){
-            if (operacao == true) {
-                JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso!");
-                this.limpaTela();
-                preencherTabela("");
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro na exclusão do Cliente");
-            }
+
+            int resposta = JOptionPane.showConfirmDialog(this, "Deseja excluir pemanentemente", "Confirmação exclusão",
+                    JOptionPane.YES_NO_OPTION);
+            if (resposta == JOptionPane.YES_OPTION) {
+                if (operacao == true) {
+                    JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso!");
+                    this.limpaTela();
+                    preencherTabela("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro na exclusão do Cliente");
+                }
             }
         }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
@@ -658,7 +658,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         ClienteDao dao = new ClienteDao();
         boolean status;
         int resposta;
-        
+
         cliente.setNome(jTxtNome.getText());
         cliente.setRg(jTxtRg.getText());
         cliente.setCpf(jTxtCpf.getText().replace(".", "").replace("-", ""));
@@ -669,9 +669,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         cliente.setBairro(jTxtBairro.getText());
         cliente.setCidade(jTxtCidade.getText());
         cliente.setEstado(jTxtEstado.getText());
-        
+
         status = dao.conectar();
-        
+
         if (status == false) {
             JOptionPane.showMessageDialog(null, "Erro de conexão");
         } else {

@@ -1,4 +1,3 @@
-
 package Dados;
 
 import java.sql.Connection;
@@ -10,11 +9,11 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ClienteDao {
-    
+
     private Conexao conexao;
     private Connection conn;
-    
-    public boolean conectar(){
+
+    public boolean conectar() {
         this.conexao = new Conexao();
         this.conn = this.conexao.getConexao();
         if (this.conn == null) {
@@ -23,7 +22,7 @@ public class ClienteDao {
             return true;
         }
     }
-    
+
     public void desconectar() {
         try {
             this.conn.close();
@@ -31,13 +30,13 @@ public class ClienteDao {
             System.out.print("erro ao desconectar " + ex.getMessage());
         }
     }
-    
-    public int salvar(Cliente cliente){
+
+    public int salvar(Cliente cliente) {
         int status;
-        
-        try{
+
+        try {
             String sql = "INSERT INTO cliente(nome, rg, cpf, telefone, rua, numero, cep, bairro, cidade, estado) VALUES (?,?,?,?,?,?,?,?,?,?)";
-            
+
             PreparedStatement st = this.conn.prepareStatement(sql);
             st.setString(1, cliente.getNome());
             st.setString(2, cliente.getRg());
@@ -51,33 +50,33 @@ public class ClienteDao {
             st.setString(10, cliente.getEstado());
             status = st.executeUpdate();
             return status;
-            
-        }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             System.out.println("Erro ao inserir cliente: " + ex.getMessage());
             return ex.getErrorCode();
         }
     }
-    
-    public boolean excluir(String cpf){
-        try{
+
+    public boolean excluir(String cpf) {
+        try {
             PreparedStatement st = this.conn.prepareStatement("DELETE FROM cliente WHERE cpf = ?");
-            st.setString(1,cpf);
+            st.setString(1, cpf);
             st.executeUpdate();
             return true;
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro ao conectar");
             return false;
         }
     }
-    
-    public Cliente consulta(String cpf){
-        try{
+
+    public Cliente consulta(String cpf) {
+        try {
             Cliente clienteEncontrado = new Cliente();
             PreparedStatement st = conn.prepareStatement("SELECT * FROM cliente  WHERE cpf = ?");
             st.setString(1, cpf);
             ResultSet rs = st.executeQuery();
-            
-            if(rs.next()){
+
+            if (rs.next()) {
                 clienteEncontrado.setNome(rs.getString("nome"));
                 clienteEncontrado.setRg(rs.getString("rg"));
                 clienteEncontrado.setCpf(rs.getString("cpf"));
@@ -88,36 +87,36 @@ public class ClienteDao {
                 clienteEncontrado.setBairro(rs.getString("bairro"));
                 clienteEncontrado.setCidade(rs.getString("cidade"));
                 clienteEncontrado.setEstado(rs.getString("estado"));
-                
+
                 return clienteEncontrado;
-            }else{
+            } else {
                 return null;
             }
-            
-        }catch(SQLException ex){
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro ao conectar2");
             return null;
         }
     }
-    
-    public List<Cliente> listar(String termoBusca){
-        try{
+
+    public List<Cliente> listar(String termoBusca) {
+        try {
             List<Cliente> lista = new ArrayList<>();
-            
+
             String sqlFiltro = "SELECT * FROM cliente C";
-                        
+
             PreparedStatement st = conn.prepareStatement(sqlFiltro);
-            if(termoBusca.equals(true)){
+            if (termoBusca.equals(true)) {
                 st.setString(1, "%" + termoBusca + "%");
             }
-            
-            if(termoBusca.equals(0)){
+
+            if (termoBusca.equals(0)) {
                 sqlFiltro = sqlFiltro + " WHERE C.cpf like ?";
             }
-            
+
             ResultSet rs = st.executeQuery();
-            
-            while (rs.next()){
+
+            while (rs.next()) {
                 Cliente clienteEncontrado = new Cliente();
                 clienteEncontrado.setNome(rs.getString("nome"));
                 clienteEncontrado.setRg(rs.getString("rg"));
@@ -129,26 +128,26 @@ public class ClienteDao {
                 clienteEncontrado.setBairro(rs.getString("bairro"));
                 clienteEncontrado.setCidade(rs.getString("cidade"));
                 clienteEncontrado.setEstado(rs.getString("estado"));
-                
+
                 lista.add(clienteEncontrado);
             }
-            
+
             return lista;
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "erro ao conectar3" + ex);
             return null;
         }
     }
-    
-    public int atualizar(Cliente cliente){
+
+    public int atualizar(Cliente cliente) {
         int status;
-        
-        try{
+
+        try {
             String sql = "UPDATE cliente SET nome=?, rg=?, telefone=?, rua=?, numero=?, cep=?, bairro=?, cidade=?, estado=? WHERE cpf=?";
-            
+
             PreparedStatement st = conn.prepareStatement(sql);
             st.setString(1, cliente.getNome());
-            st.setString(2, cliente.getRg());            
+            st.setString(2, cliente.getRg());
             st.setString(3, cliente.getTelefone());
             st.setString(4, cliente.getRua());
             st.setInt(5, cliente.getNumero());
@@ -159,11 +158,11 @@ public class ClienteDao {
             st.setString(10, cliente.getCpf());
             status = st.executeUpdate();
             return status;
-            
-        }catch (SQLException ex) {
+
+        } catch (SQLException ex) {
             System.out.println("Erro ao inserir cliente: " + ex.getMessage());
             return ex.getErrorCode();
         }
     }
-    
+
 }
